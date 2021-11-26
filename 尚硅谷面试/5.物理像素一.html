@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-bottom: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        window.onload = function () {
+            // 像素比
+            var dpr = window.devicePixelRatio;
+            // 缩放比例
+            var scale = 1 / dpr;
+            // 获取屏幕宽度
+            var width = document.documentElement.clientWidth;
+            // 获取meta标签
+            var metaNode = document.querySelector('meta[name=viewport]'); // 标签选择器
+            // 设置值meta属性
+            metaNode.setAttribute('content', 'width=device-width, initial-scale=' + scale + ',user-scalable=no');
+            // 页面中的元素（宽度，高度等）比例反向乘回来
+            var htmlNode = document.querySelector('html');
+            htmlNode.style.fontSize = width * dpr + 'px';
+        }
+    </script>
+</body>
+
+</html>

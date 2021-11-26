@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        width: 100%;
+        background-color: black;
+    }
+
+    .floated {
+        background: white;
+        /* 浮动元素背景为 白色*/
+        float: left;
+        /* 设置 图片浮动到左上角*/
+        width: 300px;
+        height: 300px;
+    }
+
+    .text {
+        margin-left: 320px;
+        /* overflow: hidden; */
+        background: red;
+        /* 文本元素背景为 红色*/
+        margin: 0;
+        /* 去掉 p 标签的上下边距*/
+    }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="floated">Floated div</div>
+        <div class="text">Quae hic ut ab perferendis sit quod architecto,dolor debitis quam rem provident aspernatur
+            tempora expedita.</div>
+    </div>
+</body>
+<script>
+    let str = 'asddfsgsgs';
+    function findChar(str) {
+        if (str.length == 1) {
+            return str;
+        }
+        str = str.split('');
+        var newStr = {};
+        // 数组去重 和计算出现的次数
+        str.forEach(function (item) {
+            if (newStr[item]) {
+                newStr[item]++;
+            } else {
+                newStr[item] = 1;
+            }
+        })
+        var cha = ''; //存储字符
+        var max = 0; //存储次数
+        for (let j in newStr) {
+            if (newStr[j] > max) {
+                max = newStr[j]
+                cha = j
+            }
+        }
+        return cha;
+    }
+    console.log(findChar(str));
+</script>
+
+</html>

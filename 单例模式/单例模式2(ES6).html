@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button">点击</button>
+    <script>
+        // class 类 可以看做是es5 构造函数的语法糖
+        //ES5 构造函数
+        function Person1(name, sex) {
+            this.name = name;
+            this.sex = sex;
+        }
+        Person1.prototype.say = function () {
+            console.log('学前端ES5');
+        }
+        let person1 = new Person1('ES5', '男');
+        console.log(person1.name);
+        person1.say();
+
+        // ES6 的实现
+        class Person2 {
+            constructor(name, sex) {
+                //在new的时候会自动调用
+                //实际开发中 更多的是做初始化的操作   
+                this.name = name;
+                this.sex = sex;
+            }
+            say() {              // 其实是定义在的原型上
+                console.log('学前端ES6');
+            }
+        }
+        let person2 = new Person2('ES6', '男')
+        console.log(person2.name);
+        person2.say();
+        console.log(person2.say === Person2.prototype.say);  //返回true
+
+        // 静态方法 static
+        class Foo {
+            static classMethod() {   //用static定义的静态方法 只能被类本身调用
+                return 'hello';
+            }
+        }
+        let foo = new Foo();
+        // console.log(Foo.classMethod());
+        // console.log(foo.classMethod());  // 会报错 因为是static定义的 只能被类本身调用
+
+        // ES6实现单例模式
+        class LyEdu {
+            constructor(name, creator, products) {
+                this.name = name;
+                this.creator = creator;
+                this.products = products;
+            }
+
+            static getInstance(name, creator, products) {
+                if (!this.instance) {
+                    this.instance = new LyEdu(name, creator, products);
+                }
+                return this.instance;
+            }
+        }
+
+        let lycom = LyEdu.getInstance('a', 'b', 'c');
+        let lycomcom = LyEdu.getInstance('d', 'e', 'f');
+        console.log(lycom === lycomcom);  // true
+    </script>
+</body>
+
+</html>

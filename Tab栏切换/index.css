@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+body {
+  display: flex;
+  justify-content: center;
+}
+.tab {
+  width: 100vw;
+  height: 5em;
+  background-color: green;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+}
+.tab .tab-list {
+  width: 800px;
+  height: 5em;
+  display: flex;
+}
+.tab .tab-list li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100%;
+}
+.tab-con {
+  margin-top: 5.2em;
+  min-width: 900px;
+}
+.tab-con .item {
+  width: 100%;
+  display: none;
+}
+.current {
+  background-color: red;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="tab">
+        <ul class="tab-list">
+            <li class="current">Card1</li>
+            <li>Card2</li>
+            <li>Card3</li>
+            <li>Card4</li>
+            <li>Card5</li>
+            <li>Card6</li>
+            <li>Card7</li>
+            <li>Card8</li>
+        </ul>
+    </div>
+    <div class="tab-con">
+        <div class="item" style="display: block;">
+            内容111111内容111111内容111111内容111111内容111111内容111111
+        </div>
+        <div class="item">
+            内容222222内容222222内容222222内容222222内容222222内容222222
+        </div>
+        <div class="item">
+            内容333333内容333333内容333333内容333333内容333333内容333333
+        </div>
+        <div class="item">
+            内容444444内容444444内容444444内容444444内容444444内容444444
+        </div>
+        <div class="item">
+            内容555555内容555555内容555555内容555555内容555555内容555555
+        </div>
+        <div class="item">
+            内容666666内容666666内容666666内容666666内容666666内容666666
+        </div>
+        <div class="item">
+            内容777777内容777777内容777777内容777777内容777777内容777777
+        </div>
+        <div class="item">
+            内容888888内容888888内容888888内容888888内容888888内容888888
+        </div>
+    </div>
+    <script>
+        // tab切换
+        /*
+        1.先for循环遍历每个tab，给其绑定click事件
+        2.点击事件：
+              （1）先遍历去掉之前tab的样式
+              （2）在给当前tab添加样式（类名）
+              （3）同时给每个tab添加index属性，便于后面配对content
+              （4）在循环遍历每个content，隐藏之前显示的content
+              （5）在根据前面标记的index，显示对应的content        
+        */
+
+        // 导航栏
+        let card = document.querySelector('.tab-list').querySelectorAll('li');
+        // 内容
+        let content = document.querySelectorAll('.item');
+        for (let i = 0; i < card.length; i++) {
+            // 先遍历一遍循环绑定点击事件
+            card[i].addEventListener('click', function () {
+                //再遍历一遍去掉之前的样式
+                for (let i = 0; i < card.length; i++) {
+                    card[i].className = ''
+                }
+                // 更改当前选中样式
+                this.className = 'current';
+
+                card[i].setAttribute('index', i); // 若属性值是数字，可以直接写；否则必须加引号
+                let index = this.getAttribute('index');
+                for (let k = 0; k < content.length; k++) {
+                    // 遍历去掉之前显示的content
+                    content[k].style.display = 'none';
+                }
+                // 显示当前content
+                content[index].style.display = 'block';
+            })
+        }
+    </script>
+</body>
+
+</html>

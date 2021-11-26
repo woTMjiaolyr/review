@@ -1,0 +1,82 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+            margin-bottom: 50px;
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <img src="./abc.png" data-src="https://img0.baidu.com/it/u=3063126680,2250826046&fm=26&fmt=auto" alt="">
+    <script>
+        /*
+          图片懒加载的原理主要是判断当前图片是否到了可视区域
+          步骤：
+               1.拿到所有的图片demo
+               2.遍历每个图片判断当前图片是否到了可视区域范围内
+               3.如果到了就设置图片的src属性
+               4.绑定window的srcoll时间，对齐进行时间监听。
+               5.优化，用节流函数包一下
+        */
+        var img = document.querySelectorAll('img'); // 获取图片数组
+        var num = img.length; // 数组长度
+        var n = 0;               // 优化，记录图片加载到的位置，避免每一次都从第一张开始遍历
+
+        function lazyload() {
+            var windowHeight = document.body.clientHeight; //窗口（可见区域）高度
+            let scrollTop = document.body.scrollTop;    // 滚动条距离
+            for (var i = n; i < num; i++) {
+                if (windowHeight + scrollTop > img[i].offsetTop) {     //判断是否滚动到可视区域
+                    if (img[i].getAttribute('src') === './abc.png') {
+                        img[i].src = img[i].getAttribute('data-src');
+                    }
+                    n = i + 1; //更新已加载图片数量
+                    console.log(n);
+                }
+            }
+        }
+        function throttle(fn, delay) {  //时间戳版本节流
+            let curTime = Date.now();
+            return function () {
+                let nowTime = Date.now();
+                if (nowTime - curTime > delay) {
+                    let context = this;
+                    let args = arguments;
+                    fn.apply(context, args);
+                    curTime = Date.now();
+                }
+            }
+        }
+        // function throttle(fn, wait) {  //定时器版本节流
+        //     let timeOut;
+        //     return function () {
+        //         if (!timeOut) {  // 或timeOut非空，就执行
+        //             let context = this;
+        //             let args = arguments;
+        //             timeOut = setTimeout(() => {
+        //                 fn.apply(context, args);
+        //                 timeOut = null;
+        //             }, wait)
+        //         }
+        //     }
+        // }
+        lazyload(); //页面也在完成后先加载一波
+        // window.addEventListener('scroll', lazyload);  // window.onscroll = lazyload;  函数不能写括号
+        window.addEventListener('scroll', throttle(lazyload, 100));  //用节流函数优化  window.onscroll = throttle(lazyload, 100);
+    </script>
+</body>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="count">点击我</button>
+    <div id="showcount"></div>
+
+    <script src="./pubsub.js"></script>
+
+    <script>
+        // 变量a和b没啥用
+        // 订阅
+        var b = (function () {
+            var div = document.getElementById('showcount');
+            Event.listen('add', function (count) {
+                div.innerHTML = count;
+            })
+        })();
+
+        //发布
+        var a = (function () {
+            var count = 0;
+            var button = document.getElementById('count');
+            button.onclick = function () {
+                Event.trigger('add', count++);
+            }
+        })();
+    </script>
+</body>
+
+</html>

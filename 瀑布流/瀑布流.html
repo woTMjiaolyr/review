@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box">
+        <div class="item"><img src="" alt=""></div>
+        <div class="item"><img src="" alt=""></div>
+        <div class="item"><img src="" alt=""></div>
+        <div class="item"><img src="" alt=""></div>
+        <div class="item"><img src="" alt=""></div>
+    </div>
+    <script>
+        var box = document.getElementById('box');
+        var items = box.children;
+        var gap = 10; //间距
+
+        window.onload = function () {
+            waterFall();
+            function waterFall() {
+                // 视口的宽度
+                var pageWidth = getClient().width;
+                var itemWidth = items[0].offsetWidth;
+                var columns = parseInt(pageWidth / (itemWidth + gap));
+
+                var arr = []; //里面放的是高度的值
+                for (var i = 0; i < items.length; i++) {
+                    if (i < columns) {
+                        //第一行
+                        items[i].style.top = 0;
+                        items[i].style.left = (itemWidth + gap) * i + 'px';
+                        arr.push(items[i].offsetHeight);
+                    } else {
+                        //第二行往后
+                        // 先找到最短的位置
+                        var minHeight = arr[0];
+                        var index = 0;
+                        for (var j = 0; j < arr.length; j++) {
+                            if (minHeight > arr[j]) {
+                                minHeight = arr[j];
+                                index = j;
+                            }
+                        }
+                        // 设置下一行第一个盒子的位置 第一张图片的位置
+                        // top
+                        items[i].style.top = arr[index] + gap + 'px';
+                        // left
+                        items[i].style.left = items[index].offsetLeft + 'px';
+
+                        // 更新最短位置的高度
+                        arr[index] += items[i].offsetHeight + gap;
+
+                    }
+                }
+            }
+
+            // 滚动加载更多图片
+            window.onscroll = function () {
+                // 判断图片加载实际
+                if (getClient().height + getScrollTop().height >= items[items.length - 1].offsetTop) {
+                    // 开始继续加载新图片
+                    var datas = [
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png',
+                        './img/1.png'
+                    ];
+                    for (var i = 0; i < datas.length; i++) {
+                        var div = document.createElement('div');
+                        div.className = 'item';
+                        div.innerHTML = '<img src="' + datas[i] + '" alt="">'; //拼接字符串
+                        box.appendChild(div);
+                    }
+                    waterFall();
+                }
+            }
+        }
+
+
+        //兼容
+        function getClient() {
+            return {
+                width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+            }
+        }
+
+        function getScrollTop() {
+            return window.pageYOffset || document.documentElement.scrollTop
+        }
+
+    </script>
+</body>
+
+</html>

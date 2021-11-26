@@ -1,0 +1,51 @@
+// 安装 easy less 插件，保存.less文件时自动生成一个.css文件
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+}
+
+.tab{
+    width: 100vw;
+    height: 5em;
+    background-color: green;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    .tab-list{
+        width: 800px;
+        height: 5em;
+        display: flex;
+
+        li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100%;
+        }
+    } 
+}
+
+
+
+.tab-con{
+    margin-top: 5.2em;
+    min-width: 900px;
+    // overflow: hidden;
+    .item{
+        width: 100%;
+        display: none;
+    }
+}
+
+.current{
+    background-color: red;
+}

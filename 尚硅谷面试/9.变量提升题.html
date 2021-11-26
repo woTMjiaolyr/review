@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Foo() { // a
+            getName = function () { console.log(1); }
+            return this;
+        }
+        Foo.getName = function () { console.log(2); }  // b
+        Foo.prototype.getName = function () { console.log(3); } // c
+        var getName = function () { console.log(4); } // d
+        function getName() { console.log(5); };   //e
+
+        // 等价于
+        // var getName;  // d 1.变量提升，被下面覆盖
+        // function getName() { console.log(5); };   // e 2.变量提升，覆盖上面的var getName
+        // function Foo() {  // a
+        //     getName = function () { console.log(1); }
+        //     return this;
+        // }
+        // Foo.getName = function () { console.log(2); } // b
+        // Foo.prototype.getName = function () { console.log(3); } // c
+        // getName = function () { console.log(4); } // e  覆盖上面的e,全局作用域下的getName
+
+        Foo.getName();  // 2
+        getName();     // 4 
+        /* 1
+        先执行Foo(),因为函数没有用var定义，所以往上找getName，
+        找到全局作用域下的getName并修改为1，返回的this为window，因为Foo的调用者为window，
+        之后等价于window.getName(),结果为1
+        */
+        Foo().getName(); // 1  
+        getName();  // 1 等价于window.getName()
+        new Foo.getName(); // 2 由于.的优先级更高，所以先.后new，最后返回一个实例但没用上 
+        new Foo().getName(); // 3 等价于(new Foo()).getName(),先返回一个foo实例，再找foo.getName(),没有就沿着原型链找，输出3
+        new new Foo().getName(); // 3 比上面最后多个了一个new出来一个实例，但没用上
+    </script>
+</body>
+
+</html>

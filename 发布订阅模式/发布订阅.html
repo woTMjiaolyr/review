@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+         如何实现发布订阅模式：
+               1.首先要想好谁是发布者（比如上面的卖家）
+               2.然后给发布者添加一个缓存列表，用于存放回调函数来通知订阅者
+               3.最后就是发布消息，发布者遍历这个缓存列表，依次触发里面存放的订阅者回调函数
+        */
+
+        // var shopObj = {}; //定义发布者
+        // shopObj.list = [];// 缓存列表 存放的是订阅的函数
+
+        // // 增加订阅者
+        // shopObj.listen = function (fn) {
+        //     shopObj.list.push(fn);
+        // }
+
+        // // 发布消息
+        // shopObj.trigger = function () {
+        //     for (var i = 0, fn; fn = this.list[i++];) {
+        //         fn.apply(this, arguments);
+        //     }
+        // }
+
+        // shopObj.listen(function (color, size) {
+        //     console.log(`颜色是${color}`);
+        //     console.log(`尺码是${size}`);
+        // })
+
+        // shopObj.listen(function (color, size) {
+        //     console.log(`one more颜色是${color}`);
+        //     console.log(`one more尺码是${size}`);
+        // })
+
+        // //小红
+        // shopObj.trigger('red', 42);
+
+        // //小明
+        // shopObj.trigger('black', 43);
+
+
+        // var shopObj = {}; //定义发布者
+        // shopObj.list = [];// 缓存列表 存放的是订阅的函数
+
+        // // 增加订阅者
+        // shopObj.listen = function (key, fn) {
+        //     if (!this.list[key]) {
+        //         this.list[key] = [];
+        //     }
+        //     this.list[key].push(fn);
+        // }
+
+        // // 发布消息
+        // shopObj.trigger = function () {
+        //     //对应的key取出来 
+        //     var key = Array.prototype.shift.call(arguments); //拿到第一个参数
+        //     var fns = this.list[key];
+        //     if (!fns || fns.length == 0) {
+        //         return
+        //     }
+        //     for (var i = 0, fn; fn = fns[i++];) {
+        //         // fn.apply(this, arguments); 可以用展开运算符写
+        //         fn(...arguments);
+        //     }
+        // }
+
+        // shopObj.listen('red', function (size) {
+        //     console.log(`one more尺码是${size}`);
+        // })
+
+        // shopObj.listen('black', function (size) {
+        //     console.log(`one more尺码是${size}`);
+        // })
+
+        // //小红
+        // shopObj.trigger('red', 42);
+
+        // //小明
+        // shopObj.trigger('black', 43);
+
+        var event = {
+            list=[],  //订阅者列表
+            // 订阅
+            listen: function (key, fn) {
+                if (!this.list[key]) {
+                    this.list[key] = [];
+                }
+                this.list[key].push(fn);
+            },
+            // 发布
+            trigger: function () {
+                //对应的key取出来 
+                var key = Array.prototype.shift.call(arguments); //拿到第一个参数
+                var fns = this.list[key];
+                if (!fns || fns.length == 0) {
+                    return
+                }
+                for (var i = 0, fn; fn = fns[i++];) {
+                    // fn.apply(this, arguments); 可以用展开运算符写
+                    fn(...arguments);
+                }
+            },
+            remove: function (key, fn) {
+                var fns = this.list[key];
+                if (!fns) {
+                    return false;
+                }
+                if (!fn) {
+                    fn && (fns.length = 0)
+                } else {
+                    for (var i = fns.length; i >= 0; i--) {
+                        var _fn = fns[i];
+                        if (fn === _fn) {
+                            fns.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+        含义：
+             发布——订阅模式定义了一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知 （先订阅再发布）
+        作用：
+             1.支持简单的广播通信，当对象状态发生改变时，会自动通知已经订阅过的对象。
+             2.可以应用在异步编程中，替代回调函数，可以订阅Ajax之后的时间，只需要订阅自己需要的部分
+             3.对象之间的松耦合，个对象之间都互相不了解彼此，但是不影响通信。
+                  当有新的订阅者出现时，发布的代码无需改变；同样发布的代码改变，只要之前约定的事件的名称没有改变，也不影响订阅
+             4.Vue react 之间实现挂组件之间的传值
+        */
+
+        /*  实现低耦合
+            用发布——订阅模式重写之后，对用户信息感兴趣的业务模块将自定订阅登陆成功的消息事件。当登陆成功时，
+            登录模块只需要发布登录成功的消息，而业务方接受到消息之后，就会开始进行格子的业务处理，
+            登录模块并不关心业务方究竟要做什么，也不想去了解他们的内部细节
+        */
+
+    </script>
+</body>
+
+</html>

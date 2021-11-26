@@ -1,0 +1,82 @@
+<script>
+  /*
+   * @Author: wzh
+   * @Date: 2020-12-30 19:34:10
+   * @Last Modified by: 1521620993@qq.com
+   * @Last Modified time: 2020-12-30 19:43:08
+   */
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>05-相邻盒子的外边距合并</title>
+</head>
+
+<body>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box1 {
+      width: 100%;
+      height: 100px;
+      background-color: red;
+      margin: 30px 0;
+      margin-bottom: 50px;
+    }
+
+    .box2 {
+      width: 100%;
+      height: 100px;
+      background-color: red;
+      margin: 30px 0;
+      /* display: inline-block; 方法一：直接给下面的元素设置*/
+
+    }
+
+    .box {
+      /* overflow: hidden; 方法二：需要在box2外面再套一个div，给外面的div设置BFC */
+      /* 外面套的盒子 */
+      overflow: hidden;
+    }
+  </style>
+  <div class="box1"></div>
+  <div class="box">
+    <div class="box2"></div>
+  </div>
+  <!-- <div class="box2"></div> -->
+
+  <!-- <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .parent {
+      height: 150px;
+      background-color: wheat;
+      margin-top: 30px;
+      /* border: 1px solid red;  方法一：给父元素设边框*/
+      /* padding: 1px; */
+      /* padding-top: 50px;   方法三：给子元素的margin-top改为父元素的padding-top*/
+      /* overflow: hidden;  方法二：给父子元素都开BFC*/
+    }
+
+    .child {
+      height: 50px;
+      background-color: magenta;
+      margin-top: 50px;
+      /* overflow: hidden; */
+    }
+  </style>
+  <div class="parent">
+    <div class="child"></div>
+  </div> -->
+</body>
+
+</html>

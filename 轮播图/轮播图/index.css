@@ -1,0 +1,85 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  /* 取消页面横线滚动条 */
+  overflow: hidden;
+}
+ul{
+  list-style: none;
+}
+.showcase{
+  width: 520px;
+  height: 280px;
+  /* outline: 3px dashed blue; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -140px;
+  margin-left: -260px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.showcase:hover .iconfont{
+  display: block;
+}
+ul.slides{
+  /* 设置完绝对定位后，设置left才会起作用 */
+  /* 设置完绝对定位会盖住下面的，可设置z-index为-1，往下一点 */
+  position: absolute;
+  outline: 3px dashed red;
+  /* width: 1200px; 通过js获取图片宽度，动态调整父盒子宽度 */
+  /* 处理空白折叠：所有文字类元素（display：inline） */
+  /* 相邻 li标签之前的空格等。。 设置font-size为0可以取消空白折叠 */
+  font-size: 0;
+  z-index: -1;
+}
+ul.slides li.slide{
+  display: inline-block;
+}
+.iconfont{
+  position: absolute;
+  font-size: 16px;
+  color: #fff;
+  width: 20px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, .3);
+  top: 50%;
+  margin-top: -15px;
+  line-height: 30px;
+  /* 鼠标经过再显示 */
+  display: none;
+}
+.iconfont.prev{
+  left:0;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.iconfont.next{
+  right:0;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+ul.spots{
+  background-color: rgba(255, 255, 255, .3);
+  position: absolute;/* 设完定位之后就不会占满一行，只会被子元素撑开*/
+  /* 消除空白折叠 */
+  font-size: 0;
+  border-radius: 10px;
+  bottom: 15px;
+  left: 50%;
+  margin-left: -35px;
+}
+ul.spots li.spot{
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #fff;
+  display: inline-block;
+  margin: 3px;
+}
+ul.spots li.spot.active{
+  background-color: red;
+}

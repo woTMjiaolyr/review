@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流</title>
+</head>
+
+<body>
+    <button id="button">点击</button>
+    <script>
+        function thro(func, wait) {
+            // 会执行你点击了 多少次 就会执行多少次
+            // 这不是我们想要得到 我们需要的是 时间是一秒 然后 哪怕你手速再快 无论点多少次，一秒内也只执行一次
+            let timeOut;
+            // 相当于就是 在办理业务
+            return function () {  //同样需要闭包 因为检查的是上一次的timeout
+                if (!timeOut) {
+                    // timeout 若有值，就不执行
+                    timeOut = setTimeout(function () {
+                        func();
+                        // 银行工作人员办理完业务之后 后面的不办理了
+                        // 所以需要在执行完之后 清空timeout
+                        timeOut = null;
+                    }, wait)
+                }
+            }
+        }
+        function handle() {
+            console.log(Math.random());
+        }
+        document.querySelector('#button').onclick = thro(handle, 2000);
+    </script>
+</body>
+
+</html>

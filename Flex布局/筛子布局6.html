@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            width: 200px;
+            height: 200px;
+            border: #999999 solid 1px;
+            margin: 0 auto;
+
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .parent {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .child {
+            width: 60px;
+            height: 60px;
+            background-color: pink;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="parent">
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        <div class="parent">
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        <div class="parent">
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 400px;
+            width: 550px;
+            background-color: orange;
+            margin: 0 auto;
+
+            /* 开启flex布局*/
+            display: flex;
+
+            /* align-items: center; 验证子元素align-self*/
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            color: white;
+            text-align: center;
+        }
+
+        .item1 {
+            background-color: red;
+            /* 1.order决定了items的排布顺序 默认是0，值越小越排在前面 */
+            /* order: 10; */
+            /* 2.在父元素的align-items已经设置好的情况下，子元素想搞特殊,用align-self */
+            /* align-self: flex-end; */
+            /* 3.flex-grow 决定了item如何扩展，分大于1和小于1两种情况。不能超过最大宽度 */
+            /* flex-grow: .2; 默认值为0 */
+            /* 4.flex-shrink 决定了item如何收缩 默认值为1*/
+            /* flex-shrink: 2; */
+            /* 5.flex-basis 决定item在主轴方向上的宽度 默认值auto */
+            /* 优先级 max/min-hetght/weight >> flex-basis >> width/height >> 内容本身的size */
+            /* flex-basis: 200px; */
+            /* 6.flex 缩写属性 flex-grow||flex-shrink||flex-basis */
+            /*   单值：无单位：flex-grow； 有单位：flex-basis； 关键字：none，auto，initial */
+            /*   两个值：第一个必须无单位：flex-grow 第二个有单位的：flex-basis*/
+            /*   三个值：前两个无单位，第三个有单位，顺序跟上面的一样 */
+        }
+
+        .item2 {
+            background-color: green;
+            /* order: 6; */
+            /* height: 150px; */
+            /* flex-grow: .2; */
+            /* flex-shrink: 2; */
+        }
+
+        .item3 {
+            background-color: blue;
+            /* order: 100; */
+            /* flex-grow: .3; */
+            /* flex-shrink: 1; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="item item1">item1</div>
+        <div class="item item2">item2</div>
+        <div class="item item3">item3</div>
+    </div>
+    <strong>strong元素是个行内元素</strong>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            width: 500px;
+            height: 500px;
+            background-color: gray;
+            /* position: relative; */
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* display: -webkit-box;  老版本flex
+            -webkit-box-pack: center;
+            -webkit-box-align: center; */
+        }
+
+        .child {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+
+            /* position: absolute; 方法一
+            left: 50%;
+            top: 50%;
+            margin-top: -100px;  transform::translate(-50%,-50%);
+            margin-left: -100px; */
+
+            /* position: absolute; 方法二
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto; */
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1.先子绝父相，子元素绝对定位，然后left和top值设为50%，然后负方向移动自身宽度高度的一半 
+            （1）margin-left/top：（2）transform：translate（-50%，-50%）是相对于自身的 -->
+    <!-- 2.子绝父相，子元素绝对定位，top/bottom/left/right 都设为0，然后margin设为auto -->
+    <!-- 3.flex布局 -->
+    <div class="parent">
+        <div class="child"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* iphone5 宽度为320px 或者更小的屏幕尺寸 */
+        @media only screen and (max-width:374px) {
+            html {
+                font-size: 86px;
+            }
+        }
+
+        /* iphone6 或x  宽度为375px  */
+        @media only screen and (min-width:374px) and (max-width:413px) {
+            html {
+                font-size: 100px;
+            }
+        }
+
+        /* iphone6 plus 宽度为414px 或者更大的屏幕尺寸 */
+        @media only screen and (min-width:414px) {
+            html {
+                font-size: 110px;
+            }
+        }
+
+        body {
+            font-size: 0.16rem;
+        }
+
+        #id {
+            width: 1rem;
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="id">
+        content
+    </div>
+</body>
+
+</html>

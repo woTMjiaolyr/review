@@ -41,32 +41,13 @@
     </div>
 </body>
 <script>
-    let str = 'asddfsgsgs';
-    function findChar(str) {
-        if (str.length == 1) {
-            return str;
-        }
-        str = str.split('');
-        var newStr = {};
-        // 数组去重 和计算出现的次数
-        str.forEach(function (item) {
-            if (newStr[item]) {
-                newStr[item]++;
-            } else {
-                newStr[item] = 1;
-            }
-        })
-        var cha = ''; //存储字符
-        var max = 0; //存储次数
-        for (let j in newStr) {
-            if (newStr[j] > max) {
-                max = newStr[j]
-                cha = j
-            }
-        }
-        return cha;
+    var a = 1;
+    {
+        a = 2;
+        function a() { };
+        a = 3;
     }
-    console.log(findChar(str));
+    console.log(a);
 </script>
 
 </html>

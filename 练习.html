@@ -41,13 +41,30 @@
     </div>
 </body>
 <script>
-    var a = 1;
-    {
-        a = 2;
-        function a() { };
-        a = 3;
+    function binarysearch(arr, data) {
+        let left = 0, right = arr.length - 1;
+        while (left <= right) {
+            let middle = Math.floor((left + right) / 2);
+            if (data < arr[middle]) {
+                right = middle - 1;
+            } else if (data > arr[middle]) {
+                left = middle + 1
+            } else {
+                return middle;
+            }
+        }
+        return -1;
     }
-    console.log(a);
+    function _instanceof(left, right) {
+        let proto = left.__proto__;
+        let prototype = right.prototype;
+        while (true) {
+            if (proto === null) return false;
+            if (proto == prototype) return true;
+            proto = proto.__proto__;
+        }
+        return false;
+    }
 </script>
 
 </html>

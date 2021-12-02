@@ -81,16 +81,16 @@ function add(x, y) {
         return x + y;
     }
 }
-//函数柯里化
+//函数柯里化 版本一
 function curry(fn) {
     // 获取原函数的参数长度
     const argLen = fn.length;
-    // 保存当前传入的参数
+    // 保存当前传入的参数  将类数组转化为数组，并取index=1往后的参数
     const presentArgs = [].slice.call(arguments, 1);
     // 返回一个新函数
     return function () {
         // 新函数会继续传参
-        const curArgs = [].slice.call(arguments);
+        const curArgs = preArgs.concat([...arguments]);
         // 合并之前所有的参数
         const allArgs = [...presentArgs, ...curArgs];
         if (allArgs.length >= argLen) {
@@ -105,7 +105,7 @@ function curry(fn) {
 function add(a, b, c) {
     return a + b + c;
 }
-var curried = curry(fn);
+var curried = curry(add);
 curried(1, 2, 3); // 6
 curried(1, 2)(3); // 6
 curried(1)(2, 3); // 6
@@ -453,6 +453,118 @@ function getParams(url) {
         })
     }
     return res
+}
+
+// 获取url参数
+// 输入：https://toutiao.com/home?a=q&b=w&c=e&a=r
+// 输出： { a: [‘q’, ‘r’], b: ‘w‘, c: ‘e’ }
+function getQuery(url) {
+    let queries = url.split('?')[1].split('&');
+    let map = new Map();
+    queries.forEach((item) => {
+        let [key, val] = item.spilit('=');
+        if (!map.has(key)) {
+            map.set(key, val);
+        } else {
+            let curVal = map.get(key);
+            map.set(key, [...curVal, val]);
+        }
+    })
+    return Object.fromEntries(map);
+}
+function getQuery(url) {
+    let quiers = url.split('?')[1].split('&');
+    let obj = {};
+    quiers.forEach((item) => {
+        let [key, val] = item.split('='); // 要用到结果运算符
+        if (!obj.hasOwnProperty(key)) {
+            obj[key] = val;
+        } else {
+            const curVal = obj[key];
+            obj[key] = [...curVal, val];
+        }
+    })
+    return obj;
+}
+
+// 二叉树层序遍历
+function order(root) {
+    if (!root) return [];
+    let queue = [root];
+    let res = [];
+    while (queue.length) {
+        let len = queue.length;
+        let cur = [];
+        for (let i = 0; i < len; i++) {
+            let node = queue.shift();
+            cur.push(node.val);
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        res.push(cur);
+    }
+    return res;
+}
+
+// fetch请求延迟处理
+let controller = new AbortController();
+let signal = controller.signal;
+
+let timeoutPromise = (delay) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('请求超时');
+            controller.abort();
+        }, delay);
+    })
+}
+let request = (url) => {
+    return fetch(url, {
+        signal: signal
+    });
+}
+Promise.race([timeoutPromise(5000), request('http://xxxxxxxx')])
+    .then(value => {
+        console.log(value);
+    }).catch(error => {
+        console.log(error);
+    })
+
+// 冒泡排序
+function bubbleSort(arr) {
+    let len = arr.length;
+    for (let i = 0; i < len - 1; i++) {
+        for (let j = 0; j < len - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            }
+        }
+    }
+}
+
+// 快速排序
+function quickSort(arr, from, to) {
+    var i = from;
+    var j = to;
+    var key = arr[from];
+    if (from >= to) {
+        return;
+    }
+    while (i < j) {
+        while (arr[j] > key && i < j) {
+            j--;
+        }
+        while (arr[i] <= key && i < j) {
+            i++
+        }
+        if (i < j) {
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    arr[from] = arr[i];
+    arr[i] = key;
+    quickSort(arr, from, i - 1);
+    quickSort(arr, i + 1, to);
 }
 
 /*

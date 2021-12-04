@@ -567,6 +567,93 @@ function quickSort(arr, from, to) {
     quickSort(arr, i + 1, to);
 }
 
+// 利用promise控制并发数量
+class Schedule {
+    constructor(maxNum) {
+        this.list = [];
+        this.maxNum = maxNum;
+        this.workingNum = 0
+    }
+    add(promiseCreater) {
+        this.list.push(promiseCreater)
+    }
+    start() {
+        for (let index = 0; index < this.maxNum; index++) {
+            this.doNext();
+        }
+    }
+    doNext() {
+        if (this.list.length && this.workingNum < this.maxNum) {
+            const promise = this.list.shift();
+            this.workingNum++;
+            promise().then(() => {
+                this.workingNum--;
+                this.doNext();
+            })
+        }
+    }
+}
+const timeout = (time) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time)
+    })
+}
+const schedule = new Schedule(2);
+const addTask = (time, order) => {
+    schedule.add(() => timeout(time).then(() => {
+        console.log(order);
+    }))
+}
+addTask(1000, 1);
+addTask(500, 2);
+addTask(300, 3);
+addTask(400, 4);
+schedule.start();
+
+// 异步相加，假设在某个设备没有加法，只能用给定的方法计算
+function asyncAdd(a, b, cd) {
+    setTimeout(() => {
+        cd(null, a + b);
+    }, Math.random() * 100)
+}
+function sum(...args) {
+    const result = [];
+    function _sum(resolve, reject) {
+        new Promise((resolve, reject) => {
+            let a = args.pop();
+            let b = args.pop();
+            a = a !== undefined ? a : 0;
+            b = b !== undefined ? b : 0;
+            asyncAdd(a, b, (res, err) => {
+                if (err) reject(error);
+                resolve(res);
+            })
+            if (args.length) {
+                _sum(resolve, reject)
+            }
+        }).then(val => {
+            result.push(val);
+            setTimeout(() => {
+                if (args.length <= 0) {
+                    resolve(sum(...result))
+                }
+            }, 100)
+        })
+    }
+    return new Promise((resolve, reject) => {
+        if (!args || !args.length) resolve(0);
+        if (args.length == 1) resolve(args[0]);
+        _sum(resolve, reject);
+    })
+}
+(async () => {
+    const result1 = await sum(1, 4, 6, 9, 1, 4);
+    const result2 = await sum(3, 4, 9, 2, 5, 3, 2, 1, 7);
+    const result3 = await sum(1, 6, 0, 5);
+    console.log([result1, result2, result3]);
+})()
+
+
 /*
 现在来探讨 [] == ! [] 的结果为什么会是true
 1、根据运算符优先级 ，！ 的优先级是大于 == 的，所以先会执行 ![]

@@ -653,6 +653,74 @@ function sum(...args) {
     console.log([result1, result2, result3]);
 })()
 
+// 用react实现一个树形结构
+{
+    list: [{
+        id: '1',
+        name: 'folder1',
+        children: [{
+            id: '11',
+            name: 'file1'
+        }, {
+            id: '12',
+            name: 'file2'
+        }]
+    }, {
+        id: '2',
+        name: 'folder2',
+        children: [{
+            id: '21',
+            name: 'folder3',
+            children: [{
+                id: '211',
+                name: 'file3'
+            }]
+        }]
+    }, {
+        id: '3',
+        name: "file4"
+    }]
+}
+const RenderTree = (props) => {
+    const { data, level = 0 } = props;
+    return (
+        data.map(item => {
+            const level = item.id.length;
+            return (
+                <div>
+                    <span>
+                        {'-'.repeat(level)}
+                    </span>
+                    <span>
+                        {item.name}
+                    </span>
+                    {
+                        item.children ? <RenderTree data={item.children}></RenderTree> : ''
+                    }
+                </div>
+            )
+        })
+    )
+
+}
+
+function TreeView(props) {
+    const { data, level = 0 } = props;
+    return (data.map(item => {
+        const level = item.id.length;
+        return (
+            <div>
+                <span>
+                    {'-'.repeat(level)}
+                </span>
+                <span>
+                    {item.name}
+                </span>
+                {item.children && item.children ? <TreeView data={item.child} level={level + 1}></TreeView> : ''}
+            </div>
+        )
+    }))
+}
 
 /*
 现在来探讨 [] == ! [] 的结果为什么会是true

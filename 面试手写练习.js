@@ -351,6 +351,17 @@ Promise.race = function (promises) {
         })
     })
 }
+MyPromise.prototype.finally = function (cb) {
+    return this.then(function (value) {
+        return MyPromise.resolve(cb()).then(function () {
+            return value
+        })
+    }, function (err) {
+        return MyPromise.resolve(cb()).then(function () {
+            throw err
+        })
+    })
+}
 
 // 图片懒加载
 let img = document.querySelectorAll('img');

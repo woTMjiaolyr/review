@@ -72,3 +72,4 @@ const io = new IntersectionObserver(ioes => {
         }
     })
 })
+checkImgs(xxx);

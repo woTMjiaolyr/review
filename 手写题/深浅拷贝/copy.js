@@ -30,3 +30,15 @@ function deepCopy(obj) {
     }
     return newObj;
 }
+
+function copy(obj) {
+    if (typeof obj === 'object' && obj) {
+        let target = Array.isArray(obj) ? [] : {}
+        for (const key in obj) {
+            target[key] = copy(obj[key])
+        }
+        return target
+    } else {
+        return obj
+    }
+}

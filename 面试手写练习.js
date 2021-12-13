@@ -755,6 +755,88 @@ console.log(a)  // 2
 a = { foo: 3 } 该变了形参a的地址，而外面的a的地址指向没有变
 */
 
+var a = 3;
+var obj = {
+    a: 4,
+    fn1: function () {
+        return this.a;
+    },
+    fn2: () => {
+        return this.a;
+    }
+}
+var obj2 = {
+    a: 5
+}
+obj.fn1()  // 4
+obj.fn2()  // 3
+obj.fn1.call(obj2) // 5
+obj.fn2.call(obj2) // 3
+
+/*
+  实现一个函数，把一个字符串数组（['zm', 'za', 'b', 'lm', 'ln', 'k']）
+  格式化成一个对象 { 'b': ['b'], 'k': ['k'], 'l': ['lm', 'ln'], 'z': ['za', 'zm'] }
+*/
+function _sort(arr) {
+    let obj = {};
+    let res = {};
+    arr.forEach(item => {
+        if (!obj[item[0]]) {
+            obj[item[0]] = []
+        }
+        obj[item[0]].push(item);
+    })
+    let newKey = Object.keys(obj).sort();
+    for (let i = 0; i < newKey.length; i++) {
+        res[newKey[i]] = obj[newKey[i]];
+    }
+    return res;
+}
+const arr = ['zm', 'za', 'b', 'lm', 'ln', 'k']
+//  { 'b': ['b'], 'k': ['k'], 'l': ['lm', 'ln'], 'z': ['za', 'zm'] }
+console.log(_sort(arr));
+
+/*
+扁平化转tree
+*/
+// map对象实现
+function tranListToTreeData(list) {
+    const treeList = [];
+    const map = {};
+    list.forEach(item => {
+        if (!item.children) {
+            item.children = []
+        }
+        map[item.id] = item;
+    })
+    list.forEach(item => {
+        const parent = map[item.pid];
+        if (parent) {
+            parent.children.push(item)
+        } else {
+            treeList.push(item);
+        }
+    })
+    return treeList;
+}
+
+/*
+tree转扁平化
+*/
+// 递归实现
+// tree转扁平化
+function treeToArray(tree) {
+    let res = [];
+    tree.forEach(item => {
+        const { children, ...i } = item;
+        if (children && children.length) {
+            res = res.concat(treeToArray(children))
+        }
+        res.push(i) // 解构赋值出children 和 i push的时候只存i，不要children
+    })
+    return res;
+}
+
 
 /*
 现在来探讨 [] == ! [] 的结果为什么会是true

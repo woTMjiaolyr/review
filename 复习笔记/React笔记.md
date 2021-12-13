@@ -381,6 +381,13 @@ ReactDOM.render(
 ##### 为什么不能用index做key？
           当数组顺序发生变化是但元素内容未变化，index的key会重新渲染
 
+##### render阶段和commit阶段
+          1. 调用this.setstate
+          2. 进入render阶段
+          3. 采用深度优先遍历创建fiber树
+          4. reconcile算法标记变化
+          5. 进入commit阶段
+          6. 执行阶段4标记的变化对应的操作
 ##### Hooks
 
 1. 手写useState

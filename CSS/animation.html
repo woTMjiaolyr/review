@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 第一步：定义关键帧 */
+        @keyframes spin {
+            0% {
+                width: 400px;
+                height: 400px;
+                background-color: gold;
+                transform: rotate(0deg);
+            }
+
+            100% {
+                width: 200px;
+                height: 100px;
+                background-color: red;
+                transform: rotate(180deg);
+            }
+        }
+
+
+        .box {
+            /* 第二步：将定义的关键帧应用到对象上 */
+            /* 参数： 关键帧名字  动画时长  循环次数/infinite  速度曲线   动画是否逆向 */
+            animation: spin 1s infinite linear alternate;
+            width: 400px;
+            height: 400px;
+            background-color: gold;
+            border: 5px solid;
+            border-radius: 20px 40px 60px 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>

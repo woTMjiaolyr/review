@@ -881,7 +881,39 @@ console.log(obj1 == obj2);
                     console.log(err)
                 }
             }
-```          
+```   
+async await应用：
+    用js代码计算localstorage容量：
+```JavaScript
+        let str = '0123456789';
+        let temp = '';
+        // 做一个10kb的字符串
+        while (str.length !== 10240) {
+            str = str + '0123456789';
+        }
+        localStorage.clear();
+        const computedTotal = () => {
+            return new Promise((resolve) => {
+                const timer = setInterval(() => {
+                    // 不断往localstorage中累计存储10kb
+                    try {
+                        localStorage.setItem('temp', temp);
+                    } catch {
+                        // 当存满时，就会报错
+                        resolve(temp.length / 1024)
+                        clearInterval(timer);
+                        localStorage.clear()
+                    }
+                    temp += str;
+                }, 0)
+            })
+        }
+        (async () => {
+            const total = await computedTotal();
+            console.log(`${total}kb`);
+            console.log(total);
+        })()
+```
 
 ### 十三、typescript
         typescript严格要求类型
@@ -995,7 +1027,8 @@ function findChar(str) {
 }
 console.log(findChar(str));
 ```
-       
+
+
 
 
 

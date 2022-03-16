@@ -405,6 +405,10 @@ function useState(initState) {
         3. 当更新 current 值时并不会 re-render ，这是与 useState 不同的地方
         4. 更新 useRef 是 side effect (副作用)，所以一般写在 useEffect 或 event handler 里
         5. useRef 类似于类组件的 this
+4. useMemo和useCallback的区别
+        useMemo返回的是函数计算的结果值（函数的返回值），用于缓存计算后的状态
+        useCallback返回的是函数，主要用来缓存函数，
+    
    
 
 ##### Vue与React对比？

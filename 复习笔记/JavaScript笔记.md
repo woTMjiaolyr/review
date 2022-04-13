@@ -884,7 +884,39 @@ console.log(obj1 == obj2);
                     console.log(err)
                 }
             }
-```          
+```   
+async await应用：
+    用js代码计算localstorage容量：
+```JavaScript
+        let str = '0123456789';
+        let temp = '';
+        // 做一个10kb的字符串
+        while (str.length !== 10240) {
+            str = str + '0123456789';
+        }
+        localStorage.clear();
+        const computedTotal = () => {
+            return new Promise((resolve) => {
+                const timer = setInterval(() => {
+                    // 不断往localstorage中累计存储10kb
+                    try {
+                        localStorage.setItem('temp', temp);
+                    } catch {
+                        // 当存满时，就会报错
+                        resolve(temp.length / 1024)
+                        clearInterval(timer);
+                        localStorage.clear()
+                    }
+                    temp += str;
+                }, 0)
+            })
+        }
+        (async () => {
+            const total = await computedTotal();
+            console.log(`${total}kb`);
+            console.log(total);
+        })()
+```
 
 ### 十三、typescript
         typescript严格要求类型
@@ -902,6 +934,45 @@ function add(x:number,y:number):number{
     return x+y;
 }
 ```
+        3. type和interface的异同
+```JavaScript
+// 相同点：
+//  1. 都可以描述一个对象或函数
+interface User {
+  name: string
+  age: number
+}
+interface SetUser {
+  (name: string, age: number): void;
+}
+
+type User = {
+  name: string
+  age: number
+};
+type SetUser = (name: string, age: number)=> void;
+//  2. 都允许拓展 （extends）？？？
+
+// 不同点：
+//   1. type 可以声明基本类型别名，联合类型，元组等类型
+//   2. interface 能够声明合并
+interface User {
+  name: string
+  age: number
+}
+interface User {
+  sex: string
+}
+/*
+User 接口为 {
+  name: string
+  age: number
+  sex: string 
+}
+*/
+
+```
+
 
 ##### 算法
 ```JavaScript
@@ -998,7 +1069,8 @@ function findChar(str) {
 }
 console.log(findChar(str));
 ```
-       
+
+
 
 
 

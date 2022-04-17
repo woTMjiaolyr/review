@@ -584,7 +584,8 @@ function quickSort(arr, from, to) {
     quickSort(arr, i + 1, to);
 }
 
-// 利用promise控制并发数量
+// 利用promise控制并发数量 (带并发限制的异步调度器)
+// 方法一
 class Schedule {
     constructor(maxNum) {
         this.list = [];
